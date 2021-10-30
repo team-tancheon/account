@@ -1,12 +1,11 @@
-package com.tancheon.account.domain;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+package com.tancheon.account.data.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="account")
@@ -14,19 +13,23 @@ import lombok.Setter;
 public class Account {
 	
 	@Id
-	@Column(name = "id")
-	long id;
-	
-	@Column(name = "email")
+	@Column(name = "id", length=32)
+	String id;
+
+	@NotBlank
+	@Column(name = "email", length=256)
 	String email;
-	
-	@Column(name = "password")
+
+	@NotBlank
+	@Column(name = "password", length=256)
 	String password;
-	
-	@Column(name = "name")
+
+	@NotBlank
+	@Column(name = "name", length=256)
 	String name;
-	
-	@Column(name = "state")
+
+	@NotBlank
+	@Column(name = "state", length=16)
 	String state;
 	
 	@Column(name = "create_date")
@@ -41,7 +44,7 @@ public class Account {
 	@Column(name = "is_receive_marketing_mail")
 	boolean isReceiveMarketingMail;
 	
-	@Column(name = "alert_email_frequency")
+	@Column(name = "alert_email_frequency", length=16)
 	String alertEmailFrequency;
 	
 	@Column(name = "is_suggest_activation")
@@ -52,11 +55,15 @@ public class Account {
 	
 	@Column(name = "is_twoFactor_authentication")
 	boolean isTwoFactorAuthentication;
-	
-	@Column(name = "time_zone_id")
-	long timeZoneId;
-	
-	@Column(name = "language_id")
-	long languageId;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "time_zone_id")
+	TimeZone timeZoneId;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "language_id")
+	Language language;
 
 }
