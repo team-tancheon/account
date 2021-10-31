@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-public class OpenApiConfiguration {
+public class OpenApiConfig {
 
     @Profile(value = { "local", "dev", "stg" })
     @Bean

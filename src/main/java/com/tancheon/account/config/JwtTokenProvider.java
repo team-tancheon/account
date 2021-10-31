@@ -3,14 +3,13 @@ package com.tancheon.account.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.tancheon.account.api.JwtProperties;
+import com.tancheon.account.api.ApiConstant;
 import com.tancheon.account.domain.Session;
 import com.tancheon.account.dto.AccountDto;
 import com.tancheon.account.utils.KeyProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Base64;
 import java.util.Date;
 
@@ -18,16 +17,8 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private String secretKey = JwtProperties.SECRET_KEY;
-    private long accessExpireTime = JwtProperties.ACCESS_EXPIRATION_TIME;
-    private long refreshExpreTime = JwtProperties.REFRESH_EXPIRATION_TIME;
-    private String prefix = JwtProperties.TOKEN_PREFIX;
-
-    @PostConstruct
-    protected void init() {
-        this.secretKey = Base64.getEncoder()
-                .encodeToString(secretKey.getBytes());
-    }
+    private final String secretKey = Base64.getEncoder()
+            .encodeToString(ApiConstant.SECRET_KEY.getBytes());
 
     public String createAccessToken(AccountDto account) {
 
@@ -39,10 +30,10 @@ public class JwtTokenProvider {
                 .withSubject(account.getId())
                 .withClaim("JWT_KEY", session.getId())
                 .withClaim("ROLE", account.getState()) //TODO: token 생성 시, ROLE 필요 -> 임시로 State 값으로 넣어두었으나, 별도 필드값 필요해 보임.
-                .withExpiresAt(new Date(System.currentTimeMillis() + accessExpireTime))
+                .withExpiresAt(new Date(System.currentTimeMillis() + ApiConstant.ACCESS_EXPIRATION_TIME))
                 .sign(Algorithm.HMAC256(secretKey));
 
-        return prefix + accessToken;
+        return ApiConstant.TOKEN_PREFIX + accessToken;
     }
 
     public String createRefreshToken(AccountDto account) {
@@ -55,10 +46,10 @@ public class JwtTokenProvider {
                 .withSubject(account.getId())
                 .withClaim("JWT_KEY", session.getId())
                 .withClaim("ROLE", account.getState()) //TODO: token 생성 시, ROLE 필요 -> 임시로 State 값으로 넣어두었으나, 별도 필드값 필요해 보임.
-                .withExpiresAt(new Date(System.currentTimeMillis() + refreshExpreTime))
+                .withExpiresAt(new Date(System.currentTimeMillis() + ApiConstant.REFRESH_EXPIRATION_TIME))
                 .sign(Algorithm.HMAC256(secretKey));
 
-        return prefix + refreshToken;
+        return ApiConstant.TOKEN_PREFIX + refreshToken;
     }
 
 

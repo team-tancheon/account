@@ -1,6 +1,6 @@
 package com.tancheon.account.controller;
 
-import com.tancheon.account.api.JwtProperties;
+import com.tancheon.account.api.ApiConstant;
 import com.tancheon.account.dto.AccountDto;
 import com.tancheon.account.dto.TokenDto;
 import com.tancheon.account.service.LoginService;
@@ -28,7 +28,7 @@ public class LoginController extends BaseController {   //TODO: BaseController í
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader("User-Agent") String userAgent,
-                                         @RequestHeader(JwtProperties.AUTHORIZATION) String token) {
+                                         @RequestHeader(ApiConstant.AUTHORIZATION) String token) {
 
         loginService.logout(userAgent, token);
         return responseOk("");

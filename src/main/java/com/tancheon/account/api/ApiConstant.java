@@ -1,6 +1,6 @@
 package com.tancheon.account.api;
 
-public interface JwtProperties {
+public interface ApiConstant {
 
     // JWT Token을 hash 할 때 사용할 secret key
     String SECRET_KEY = "asdf1234!";

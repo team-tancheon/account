@@ -10,6 +10,7 @@ spring:
       validation-timeout: 5000
       max-lifetime: 60000
       maximum-pool-size: 10
+
   jpa:
     generate-ddl: true
     hibernate:
@@ -21,6 +22,7 @@ spring:
         show-sql: true
         use_sql_comments: true
     open-in-view: false
+
   flyway:
     enabled: true
     url: jdbc:postgresql://localhost:5432/account
@@ -37,6 +39,18 @@ spring:
     clean-disabled: true
     clean-on-validation-error: false
     installed-by: account
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 logging:
   config: classpath:logback/logback-local.xml
