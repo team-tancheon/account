@@ -17,7 +17,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     private final List<String> jwtAuthorizationInterceptPatterns = null;
 
-    private static final List<String> jwtAuthorizationExcludePatterns = Arrays.asList(
+    private final List<String> jwtAuthorizationExcludePatterns = Arrays.asList(
             "/assest/",
             "/account/v1/api-docs/",
             "/configuration/ui",
