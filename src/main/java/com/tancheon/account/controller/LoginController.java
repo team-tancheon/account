@@ -4,35 +4,33 @@ import com.tancheon.account.api.JwtProperties;
 import com.tancheon.account.dto.AccountDto;
 import com.tancheon.account.dto.TokenDto;
 import com.tancheon.account.service.LoginService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 
+@RequiredArgsConstructor
 @RequestMapping("/account/v1")
 @RestController
 public class LoginController extends BaseController {
 
-    @Autowired
-    private LoginService loginService;
+    private final LoginService loginService;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestHeader("User-Agent") String userAgent
-            , @RequestBody @Valid AccountDto request
-            , HttpServletResponse response) {
+    public ResponseEntity<TokenDto> login(@RequestHeader("User-Agent") String userAgent,
+                                          @RequestBody @Valid AccountDto accountDto) {
 
-        TokenDto tokens = loginService.login(userAgent, request, response);
-       return responseOk( tokens );
+        TokenDto tokens = loginService.login(userAgent, accountDto);
+        return responseOk(tokens);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> login(@RequestHeader("User-Agent") String userAgent, HttpServletRequest request) {
+    public ResponseEntity<String> logout(@RequestHeader("User-Agent") String userAgent,
+                                         @RequestHeader(JwtProperties.HEADER_STRING) String headerString) {
 
-        loginService.logout(userAgent, request.getHeader(JwtProperties.HEADER_STRING));
+        loginService.logout(userAgent, headerString);
 
         return responseOk("");
     }

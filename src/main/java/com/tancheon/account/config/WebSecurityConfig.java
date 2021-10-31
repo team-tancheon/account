@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // SWAGGER IGNORE
         webSecurity.ignoring().antMatchers(
-                 "/account/v1/api-docs/**",
+                "/account/v1/api-docs/**",
                 "/assest/**", "/configuration/ui", "/configuration/**", "/webjars/**",
                 "/swagger-resources/**", "/swagger-resources", "/swagger-ui.html");
     }

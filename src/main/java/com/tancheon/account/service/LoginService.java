@@ -12,42 +12,37 @@ import com.tancheon.account.domain.Session;
 import com.tancheon.account.dto.AccountDto;
 import com.tancheon.account.dto.TokenDto;
 import com.tancheon.account.utils.KeyProvider;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletResponse;
-
+@RequiredArgsConstructor
 @Service
 public class LoginService {
 
-    private AccountRepository accountRepo;
-    private SessionRepository sessionRepo;
-    private JwtTokenProvider jwtTokenProvider;
+    private final AccountRepository accountRepo;
+    private final SessionRepository sessionRepo;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public TokenDto login(String userAgent, AccountDto req, HttpServletResponse response) {
+    public TokenDto login(String userAgent, AccountDto accountDto) {
 
-        Account account = accountRepo.findByEmail(req.getEmail())
+        Account account = accountRepo.findByEmail(accountDto.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("login fail"));
 
-        if (!passwordEncoder.matches(req.getPassword(), account.getPassword())) {
+        if (!passwordEncoder.matches(accountDto.getPassword(), account.getPassword())) {
             throw new IllegalArgumentException("login fail");
         }
 
-        String accessToken = jwtTokenProvider.createAccessToken(req);
-        String refreshToken = jwtTokenProvider.createRefreshToken(req);
+        String accessToken = jwtTokenProvider.createAccessToken(accountDto);
+        String refreshToken = jwtTokenProvider.createRefreshToken(accountDto);
 
         Session session = new Session();
         session.setId(KeyProvider.createKey());
-        session.setDeviceName("");
-        session.setBrowserName("");
         session.setLastAccessDate(System.currentTimeMillis());
         session.setAccount(account);
         session.setToken(refreshToken);
