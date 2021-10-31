@@ -1,4 +1,4 @@
-package com.tancheon.account.dao.repository;
+package com.tancheon.account.repository;
 
 import com.tancheon.account.domain.Session;
 import org.springframework.data.jpa.repository.JpaRepository;

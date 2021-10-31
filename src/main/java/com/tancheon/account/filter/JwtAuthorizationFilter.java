@@ -1,6 +1,6 @@
 package com.tancheon.account.filter;
 
-import com.tancheon.account.dao.repository.SessionRepository;
+import com.tancheon.account.repository.SessionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;

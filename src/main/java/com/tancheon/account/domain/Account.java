@@ -64,6 +64,6 @@ public class Account {
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "language_id")
-	Language language;
+	private Language language;
 
 }

@@ -13,19 +13,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    private final String[] ignorePatterns = {
+            "/account/v1/api-docs/**",
+            "/assest/**",
+            "/configuration/ui",
+            "/configuration/**",
+            "/webjars/**",
+            "/swagger-resources/**",
+            "/swagger-resources",
+            "/swagger-ui.html"
+    };
 
     @Override
     public void configure(WebSecurity webSecurity) {
 
         // SWAGGER IGNORE
-        webSecurity.ignoring().antMatchers(
-                "/account/v1/api-docs/**",
-                "/assest/**", "/configuration/ui", "/configuration/**", "/webjars/**",
-                "/swagger-resources/**", "/swagger-resources", "/swagger-ui.html");
+        webSecurity.ignoring().antMatchers(ignorePatterns);
     }
 
     @Override
@@ -40,5 +43,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
         //TODO: Jwt 검증 필터 추가
         ;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

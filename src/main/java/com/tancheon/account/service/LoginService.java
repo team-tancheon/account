@@ -5,8 +5,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.tancheon.account.api.JwtProperties;
 import com.tancheon.account.config.JwtTokenProvider;
-import com.tancheon.account.dao.repository.AccountRepository;
-import com.tancheon.account.dao.repository.SessionRepository;
+import com.tancheon.account.repository.AccountRepository;
+import com.tancheon.account.repository.SessionRepository;
 import com.tancheon.account.domain.Account;
 import com.tancheon.account.domain.Session;
 import com.tancheon.account.dto.AccountDto;
@@ -25,7 +25,6 @@ public class LoginService {
     private final AccountRepository accountRepository;
     private final SessionRepository sessionRepository;
     private final JwtTokenProvider jwtTokenProvider;
-
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)

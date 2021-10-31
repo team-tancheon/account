@@ -28,7 +28,7 @@ public class Session {
 	private String browserName;
 
 	@Column(name = "last_access_date")
-	long lastAccessDate;
+	private long lastAccessDate;
 
 	@NotBlank
 	@Column(name = "token", length=256)
