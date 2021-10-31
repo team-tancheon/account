@@ -14,7 +14,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/account/v1")
 @RestController
-public class LoginController extends BaseController {
+public class LoginController extends BaseController {   //TODO: BaseController 타입 지정 필요
 
     private final LoginService loginService;
 
@@ -28,13 +28,10 @@ public class LoginController extends BaseController {
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader("User-Agent") String userAgent,
-                                         @RequestHeader(JwtProperties.HEADER_STRING) String headerString) {
+                                         @RequestHeader(JwtProperties.AUTHORIZATION) String token) {
 
-        loginService.logout(userAgent, headerString);
-
+        loginService.logout(userAgent, token);
         return responseOk("");
     }
-
-
 }
 
