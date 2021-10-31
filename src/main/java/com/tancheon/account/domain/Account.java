@@ -14,52 +14,52 @@ public class Account {
 	
 	@Id
 	@Column(name = "id", length=32)
-	String id;
+	private String id;
 
 	@NotBlank
 	@Column(name = "email", length=256)
-	String email;
+	private String email;
 
 	@NotBlank
 	@Column(name = "password", length=256)
-	String password;
+	private String password;
 
 	@NotBlank
 	@Column(name = "name", length=256)
-	String name;
+	private String name;
 
 	@NotBlank
 	@Column(name = "state", length=16)
-	String state;
+	private String state;
 	
 	@Column(name = "create_date")
-	long createDate;
+	private long createDate;
 	
 	@Column(name = "change_date")
-	long changeDate;
+	private long changeDate;
 	
 	@Column(name = "password_change_date")
-	long passwordChangeDate;
+	private long passwordChangeDate;
 	
 	@Column(name = "is_receive_marketing_mail")
-	boolean isReceiveMarketingMail;
+	private boolean isReceiveMarketingMail;
 	
 	@Column(name = "alert_email_frequency", length=16)
-	String alertEmailFrequency;
+	private String alertEmailFrequency;
 	
 	@Column(name = "is_suggest_activation")
-	boolean isSuggestActivation;
+	private boolean isSuggestActivation;
 	
 	@Column(name = "is_colorblind_friendly")
-	boolean isColorblindFriendly;
+	private boolean isColorblindFriendly;
 	
 	@Column(name = "is_twoFactor_authentication")
-	boolean isTwoFactorAuthentication;
+	private boolean isTwoFactorAuthentication;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "time_zone_id")
-	TimeZone timeZoneId;
+	private TimeZone timeZoneId;
 
 	@NotNull
 	@ManyToOne

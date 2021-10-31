@@ -6,10 +6,10 @@ import lombok.Setter;
 @Getter @Setter
 public class LoginHistoryDto {
 
-	String id;
+	private String id;
 
-	AccountDto account;
+	private AccountDto account;
 
-	long loginDate;
+	private long loginDate;
 
 }

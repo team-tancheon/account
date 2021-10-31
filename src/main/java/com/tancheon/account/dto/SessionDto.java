@@ -8,17 +8,17 @@ import javax.validation.constraints.NotBlank;
 @Getter @Setter
 public class SessionDto {
 
-	String id;
+	private String id;
 
-	AccountDto account;
+	private AccountDto account;
 
-	String deviceName;
+	private String deviceName;
 
-	String browserName;
+	private String browserName;
 
-	long lastAccessDate;
+	private long lastAccessDate;
 
 	@NotBlank
-	String token;
+	private String token;
 
 }

@@ -14,24 +14,24 @@ public class Session {
 
 	@Id
 	@Column(name = "id", length=32)
-	String id;
+	private String id;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "account_id")
-	Account account;
+	private Account account;
 
 	@Column(name = "device_name", length=256)
-	String deviceName;
+	private String deviceName;
 
 	@Column(name = "browser_name", length=256)
-	String browserName;
+	private String browserName;
 
 	@Column(name = "last_access_date")
 	long lastAccessDate;
 
 	@NotBlank
 	@Column(name = "token", length=256)
-	String token;
+	private String token;
 
 }

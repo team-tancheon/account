@@ -6,14 +6,14 @@ import lombok.Setter;
 @Getter @Setter
 public class VerifyInfoDto {
 
-	String id;
+	private String id;
 
-	AccountDto account;
+	private AccountDto account;
 
-	String verifyCode;
+	private String verifyCode;
 
-	long createDate;
+	private long createDate;
 
-	long expireDate;
+	private long expireDate;
 
 }

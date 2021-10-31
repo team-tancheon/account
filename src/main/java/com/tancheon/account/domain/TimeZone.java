@@ -16,10 +16,10 @@ public class TimeZone {
 
 	@Id
 	@Column(name = "id", length=32)
-	String id;
+	private String id;
 
 	@NotBlank
 	@Column(name = "name", length=50)
-	String name;
+	private String name;
 
 }

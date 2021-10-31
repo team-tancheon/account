@@ -14,21 +14,21 @@ public class VerifyInfo {
 
 	@Id
 	@Column(name = "id", length=32)
-	String id;
+	private String id;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "account_id")
-	Account account;
+	private Account account;
 
 	@NotBlank
 	@Column(name = "verify_code", length=6)
-	String verifyCode;
+	private String verifyCode;
 
 	@Column(name = "create_date")
-	long createDate;
+	private long createDate;
 
 	@Column(name = "expire_date")
-	long expireDate;
+	private long expireDate;
 
 }

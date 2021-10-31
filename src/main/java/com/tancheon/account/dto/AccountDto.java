@@ -7,39 +7,39 @@ import javax.validation.constraints.NotBlank;
 
 @Getter @Setter
 public class AccountDto {
-	
-	String id;
+
+	private String id;
 
 	@NotBlank
-	String email;
+	private String email;
 
 	@NotBlank
-	String password;
+	private String password;
 
 	@NotBlank
-	String name;
+	private String name;
 
 	@NotBlank
-	String state;
-	
-	long createDate;
-	
-	long changeDate;
-	
-	long passwordChangeDate;
-	
-	boolean isReceiveMarketingMail;
-	
-	String alertEmailFrequency;
-	
-	boolean isSuggestActivation;
-	
-	boolean isColorblindFriendly;
-	
-	boolean isTwoFactorAuthentication;
+	private String state;
 
-	TimeZoneDto timeZoneId;
+	private long createDate;
 
-	LanguageDto language;
+	private long changeDate;
+
+	private long passwordChangeDate;
+
+	private boolean isReceiveMarketingMail;
+
+	private String alertEmailFrequency;
+
+	private boolean isSuggestActivation;
+
+	private boolean isColorblindFriendly;
+
+	private boolean isTwoFactorAuthentication;
+
+	private TimeZoneDto timeZoneId;
+
+	private LanguageDto language;
 
 }

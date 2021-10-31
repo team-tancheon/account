@@ -13,14 +13,14 @@ public class LoginHistory {
 
 	@Id
 	@Column(name = "id", length=32)
-	String id;
+	private String id;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "account_id")
-	Account account;
+	private Account account;
 
 	@Column(name = "login_date")
-	long loginDate;
+	private long loginDate;
 
 }

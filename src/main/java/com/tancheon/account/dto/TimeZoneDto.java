@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter @Setter
 public class TimeZoneDto {
 
-	String id;
+	private String id;
 
-	String name;
+	private String name;
 
 }

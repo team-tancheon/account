@@ -8,9 +8,9 @@ import javax.validation.constraints.NotBlank;
 @Getter @Setter
 public class LanguageDto {
 
-	String id;
+	private String id;
 
 	@NotBlank
-	String name;
+	private String name;
 
 }
