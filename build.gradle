@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.postgresql:postgresql:42.3.0'
     implementation 'org.springdoc:springdoc-openapi-ui:1.4.8'
+    implementation 'org.flywaydb:flyway-core:6.5.7'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

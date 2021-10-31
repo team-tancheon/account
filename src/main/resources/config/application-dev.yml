@@ -20,6 +20,22 @@ spring:
         show-sql: true
         use_sql_comments: false
     open-in-view: false
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://localhost:5432/account
+    user: brryu
+    password: brryu5000!
+    encoding: UTF-8
+    locations: classpath:db/migration
+    table: flyway_schema_history
+    sql-migration-prefix: V
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
+    baseline-description: test
+    baseline-on-migrate: true
+    clean-disabled: true
+    clean-on-validation-error: false
+    installed-by: account
 
 logging:
   config: classpath:logback/logback-remote.xml
