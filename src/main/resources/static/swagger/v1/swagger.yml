@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  version: 'v1'
+  title: 'Account API'
+  description: 'Account apis'
+
+servers:
+  - url: /account
+
+components:
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: Authorization
+
+# Reference
+# - https://swagger.io/docs/specification/data-models/data-types/
+# - https://petstore.swagger.io/
+# - https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml
+paths:
+  /v1/login:
+    post:
+      summary: '로그인'
+      tags:
+        - 'Account API'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  description: '이메일 주소'
+                  type: string
+                password:
+                  format: password
+                  description: '비밀번호'
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        200:
+          description: '게시글 생성 성공'
+
+  /v1/logout:
+    post:
+      security:
+        - api-key: []
+      summary: '로그아웃'
+      tags:
+        - 'Account API'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded: []
+        responses:
+          200:
+            description: '로그아웃 성공'
+
+  /v1/register:
+    post:
+      summary: '회원가입'
+      tags:
+        - 'Account API'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  description: '이메일 주소'
+                  type: string
+                  required: false
+      responses:
+        201:
+          description: '회원가입 성공'

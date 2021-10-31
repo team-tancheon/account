@@ -13,8 +13,8 @@ spring:
   profiles:
     active: local
 
-#springdoc:
-#  api-docs:
-#    enabled: false
-#  swagger-ui:
-#    url: /account/swagger/v1/swagger.yml
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    url: /account/swagger/v1/swagger.yml
