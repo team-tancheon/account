@@ -22,8 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class LoginService {
 
-    private final AccountRepository accountRepo;
-    private final SessionRepository sessionRepo;
+    private final AccountRepository accountRepository;
+    private final SessionRepository sessionRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     private final PasswordEncoder passwordEncoder;
@@ -31,7 +31,7 @@ public class LoginService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public TokenDto login(String userAgent, AccountDto accountDto) {
 
-        Account account = accountRepo.findByEmail(accountDto.getEmail())
+        Account account = accountRepository.findByEmail(accountDto.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("login fail"));
 
         if (!passwordEncoder.matches(accountDto.getPassword(), account.getPassword())) {
@@ -47,7 +47,7 @@ public class LoginService {
         session.setAccount(account);
         session.setToken(refreshToken);
 
-        sessionRepo.save(session);
+        sessionRepository.save(session);
 
         // accessToken과 refreshToken 반환
         TokenDto tokens = new TokenDto();
@@ -68,9 +68,9 @@ public class LoginService {
                 .verify(token.replace(JwtProperties.TOKEN_PREFIX, ""));
         String jwtKey = decodedJWT.getClaim("JWT_KEY").asString();
 
-        Session session = sessionRepo.findById(jwtKey)
+        Session session = sessionRepository.findById(jwtKey)
                 .orElseThrow(() -> new IllegalArgumentException("session not found"));
-        sessionRepo.delete(session);
+        sessionRepository.delete(session);
 
     }
 }
