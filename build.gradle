@@ -24,7 +24,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql:42.3.0'
     implementation 'org.springdoc:springdoc-openapi-ui:1.4.8'
+    implementation 'org.flywaydb:flyway-core:6.5.7'
+    implementation group: 'com.auth0', name: 'java-jwt', version: '3.18.2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.5.6'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -36,8 +40,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
-
-    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 }
 
 test {

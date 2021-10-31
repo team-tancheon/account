@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/account
-    username: root
-    password: root
+    username: brryu
+    password: brryu5000!
     hikari:
       auto-commit: false
       connection-timeout: 30000
@@ -14,10 +14,32 @@ spring:
     generate-ddl: true
     hibernate:
       dialect: org.hibernate.dialect.PostgreSQL10Dialect
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
         show-sql: true
         use_sql_comments: true
     open-in-view: false
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://localhost:5432/account
+    user: brryu
+    password: brryu5000!
+    encoding: UTF-8
+    locations: classpath:db/migration
+    table: flyway_schema_history
+    sql-migration-prefix: V
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
+    baseline-description: test
+    baseline-on-migrate: true
+    clean-disabled: true
+    clean-on-validation-error: false
+    installed-by: account
+
+logging:
+  config: classpath:logback/logback-local.xml
+  file:
+    path: ${user.home}/logs/account
+    name: account.log
