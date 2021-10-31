@@ -10,6 +10,7 @@ import com.tancheon.account.dao.repository.SessionRepository;
 import com.tancheon.account.domain.Account;
 import com.tancheon.account.domain.Session;
 import com.tancheon.account.dto.AccountDto;
+import com.tancheon.account.dto.TokenDto;
 import com.tancheon.account.utils.KeyProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
@@ -32,7 +32,7 @@ public class LoginService {
 
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void login(String userAgent, AccountDto req, HttpServletResponse response) {
+    public TokenDto login(String userAgent, AccountDto req, HttpServletResponse response) {
 
         Account account = accountRepo.findByEmail(req.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("login fail"));
@@ -54,9 +54,12 @@ public class LoginService {
 
         sessionRepo.save(session);
 
-        //TODO: reponse Cookie에 accessToken과 refreshToken을 담아야 함.
-        response.addCookie(new Cookie("accessToken", accessToken));
-        response.addCookie(new Cookie("refreshToken", accessToken));
+        // accessToken과 refreshToken 반환
+        TokenDto tokens = new TokenDto();
+        tokens.setAccessToken(accessToken);
+        tokens.setRefreshToken(refreshToken);
+
+        return tokens;
 
     }
 
@@ -70,11 +73,9 @@ public class LoginService {
                 .verify(token.replace(JwtProperties.TOKEN_PREFIX, ""));
         String jwtKey = decodedJWT.getClaim("JWT_KEY").asString();
 
-        Session session = sessionRepo.findByKey(jwtKey)
+        Session session = sessionRepo.findById(jwtKey)
                 .orElseThrow(() -> new IllegalArgumentException("session not found"));
         sessionRepo.delete(session);
-
-        //TODO: Cookie에서 accessToken clear 해야함.
 
     }
 }

@@ -2,6 +2,7 @@ package com.tancheon.account.controller;
 
 import com.tancheon.account.api.JwtProperties;
 import com.tancheon.account.dto.AccountDto;
+import com.tancheon.account.dto.TokenDto;
 import com.tancheon.account.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,12 @@ public class LoginController extends BaseController {
     private LoginService loginService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestHeader("User-Agent") String userAgent
+    public ResponseEntity<TokenDto> login(@RequestHeader("User-Agent") String userAgent
             , @RequestBody @Valid AccountDto request
             , HttpServletResponse response) {
 
-       loginService.login(userAgent, request, response);
-       return responseOk( "" );
+        TokenDto tokens = loginService.login(userAgent, request, response);
+       return responseOk( tokens );
     }
 
     @PostMapping("/logout")

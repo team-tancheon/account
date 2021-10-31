@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface SessionRepository extends JpaRepository<Session, Long> {
 
-    Optional<Session> findByKey(String jwtKey);
+    Optional<Session> findById(String jwtKey);
 
-    void deletByKey(String jwtKey);
+    void deleteById(String jwtKey);
 }
