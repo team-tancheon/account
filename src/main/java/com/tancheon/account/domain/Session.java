@@ -1,5 +1,6 @@
 package com.tancheon.account.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="session")
-@Getter @Setter
+@Getter @Setter @Builder
 public class Session {
 
 	@Id

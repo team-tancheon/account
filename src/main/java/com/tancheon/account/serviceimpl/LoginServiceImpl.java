@@ -5,12 +5,12 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.tancheon.account.api.ApiConstant;
 import com.tancheon.account.config.JwtTokenProvider;
-import com.tancheon.account.repository.AccountRepository;
-import com.tancheon.account.repository.SessionRepository;
 import com.tancheon.account.domain.Account;
 import com.tancheon.account.domain.Session;
 import com.tancheon.account.dto.AccountDto;
 import com.tancheon.account.dto.TokenDto;
+import com.tancheon.account.repository.AccountRepository;
+import com.tancheon.account.repository.SessionRepository;
 import com.tancheon.account.service.EmailService;
 import com.tancheon.account.service.LoginService;
 import com.tancheon.account.utils.KeyProvider;
@@ -44,18 +44,27 @@ public class LoginServiceImpl implements LoginService {
         String accessToken = jwtTokenProvider.createAccessToken(accountDto);
         String refreshToken = jwtTokenProvider.createRefreshToken(accountDto);
 
-        Session session = new Session();
-        session.setId(KeyProvider.createKey());
-        session.setLastAccessDate(System.currentTimeMillis());
-        session.setAccount(account);
-        session.setToken(refreshToken);
+        // browserName setting
+        String browserName = getBrowserName(userAgent);
+        // deviceName setting
+        String deviceName = getDeviceName(userAgent);
+        // now date
+        long nowDate = System.currentTimeMillis();
 
-        sessionRepository.save(session);
+        Session session = Session.builder()
+                .id(KeyProvider.createKey())
+                .account(account)
+                .browserName(browserName)
+                .deviceName(deviceName)
+                .lastAccessDate(nowDate)
+                .token(refreshToken)
+                .build();
+
+        sessionRepository.save(session); // refresh token db에 저장
 
         // accessToken과 refreshToken 반환
         TokenDto tokens = new TokenDto();
         tokens.setAccessToken(accessToken);
-        tokens.setRefreshToken(refreshToken);
 
         return tokens;
 
@@ -76,5 +85,39 @@ public class LoginServiceImpl implements LoginService {
                 .orElseThrow(() -> new IllegalArgumentException("session not found"));
         sessionRepository.delete(session);
 
+    }
+
+    private String getBrowserName(String userAgent) {
+        String browserName = "";
+
+        if(userAgent.contains("Chrome")){
+            browserName = "Chrome";
+        }else if(userAgent.contains("Trident")){
+            browserName = "IE";
+        }else if(userAgent.contains("Edge")){
+            browserName = "Edge";
+        }else if(userAgent.contains("Firefox")){
+            browserName = "Firefox";
+        }else if(userAgent.contains("Opera")){
+            browserName = "Opera";
+        }else if(userAgent.contains("Whale")){
+            browserName = "Whale";
+        }
+
+        return browserName;
+    }
+
+    private String getDeviceName(String userAgent) {
+        String deviceName = "";
+
+        if(userAgent.contains("Windows")) {
+            deviceName = "Windows";
+        }else if(userAgent.contains("Macintosh")){
+            deviceName = "Macintosh";
+        }else if(userAgent.contains("Linux")){
+            deviceName = "Linux";
+        }
+
+        return deviceName;
     }
 }

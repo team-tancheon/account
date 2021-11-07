@@ -7,11 +7,13 @@ public interface ApiConstant {
 
     // JWT Token의 validation 기간
     long REFRESH_EXPIRATION_TIME = 60 * 60 * 24 * 7 * 1000L;    // 1 week
-    long ACCESS_EXPIRATION_TIME = 1 * 60 * 1000L;               // 1 minute
+    long ACCESS_EXPIRATION_TIME = 30 * 60 * 1000L;               // 30 minute
 
     // JWT Token의 prefix는 Bearer
-    String TOKEN_PREFIX = "TANCHEON:";
+    String TOKEN_PREFIX = "Bearer ";
 
     // JWT Token은 Authorization header로 전달됩니다.
     String AUTHORIZATION = "Authorization";
+
+    String ISSUER = "TANCHEON";
 }

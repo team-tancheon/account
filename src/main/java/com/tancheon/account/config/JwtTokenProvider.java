@@ -2,11 +2,11 @@ package com.tancheon.account.config;
 
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.tancheon.account.api.ApiConstant;
-import com.tancheon.account.domain.Session;
 import com.tancheon.account.dto.AccountDto;
-import com.tancheon.account.utils.KeyProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,13 +22,10 @@ public class JwtTokenProvider {
 
     public String createAccessToken(AccountDto account) {
 
-        Session session = new Session();
-        session.setId(KeyProvider.createKey());
-
         // access token 생성
         String accessToken = JWT.create()
-                .withSubject(account.getId())
-                .withClaim("JWT_KEY", session.getId())
+                .withIssuer(ApiConstant.ISSUER)
+                .withClaim("JWT_KEY", account.getId())
                 .withClaim("ROLE", account.getState()) //TODO: token 생성 시, ROLE 필요 -> 임시로 State 값으로 넣어두었으나, 별도 필드값 필요해 보임.
                 .withExpiresAt(new Date(System.currentTimeMillis() + ApiConstant.ACCESS_EXPIRATION_TIME))
                 .sign(Algorithm.HMAC256(secretKey));
@@ -38,13 +35,10 @@ public class JwtTokenProvider {
 
     public String createRefreshToken(AccountDto account) {
 
-        Session session = new Session();
-        session.setId(KeyProvider.createKey());
-
-        // access token 생성
+        // refresh token 생성
         String refreshToken = JWT.create()
-                .withSubject(account.getId())
-                .withClaim("JWT_KEY", session.getId())
+                .withIssuer(ApiConstant.ISSUER)
+                .withClaim("JWT_KEY", account.getId())
                 .withClaim("ROLE", account.getState()) //TODO: token 생성 시, ROLE 필요 -> 임시로 State 값으로 넣어두었으나, 별도 필드값 필요해 보임.
                 .withExpiresAt(new Date(System.currentTimeMillis() + ApiConstant.REFRESH_EXPIRATION_TIME))
                 .sign(Algorithm.HMAC256(secretKey));
@@ -53,11 +47,13 @@ public class JwtTokenProvider {
     }
 
 
-    public boolean validateToken(String userAgent, String token ) {
+    public void verifyToken(String token) throws JWTVerificationException {
 
-        //TODO: 토큰 유효성 검증 및 decode
+        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(ApiConstant.SECRET_KEY))
+                .withIssuer(ApiConstant.ISSUER)
+                .build();
 
-        return true;
+        verifier.verify(token);
     }
 
     public void removeToken(String userAgent, String token) {
