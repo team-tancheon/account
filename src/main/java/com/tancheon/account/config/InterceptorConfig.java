@@ -15,7 +15,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     private final JwtAuthorizationInterceptor jwtAuthorizationInterceptor;
 
-    private final List<String> jwtAuthorizationInterceptPatterns = null;
+    private final List<String> jwtAuthorizationInterceptPatterns = Arrays.asList(
+            "/**"
+    );
 
     private final List<String> jwtAuthorizationExcludePatterns = Arrays.asList(
             "/assest/",
@@ -31,6 +33,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtAuthorizationInterceptor)
+                .addPathPatterns(jwtAuthorizationInterceptPatterns)
                 .excludePathPatterns(jwtAuthorizationExcludePatterns);
     }
 }

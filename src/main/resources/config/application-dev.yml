@@ -36,9 +36,29 @@ spring:
     clean-disabled: true
     clean-on-validation-error: false
     installed-by: account
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ENC(CAlWI1BeES7idnwqXcdC9C6RG6PAO+TZEJ5uwQYosjA=)
+    password: ENC(WLvgCc4EKnQtsacTy0MdMB+3yKaDjGit7wTOTCPIEpI=)
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
 
 logging:
   config: classpath:logback/logback-remote.xml
   file:
     path: ${user.home}/logs/account
     name: account.log
+
+application:
+  async-executor:
+    core-pool-size: 10
+    max-pool-size: 100
+    queue-capacity: 10000
+  mail:
+    sender-mail-address: dev-no-reply@gmail.com

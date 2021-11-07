@@ -8,8 +8,10 @@ import com.tancheon.account.config.JwtTokenProvider;
 import com.tancheon.account.domain.Account;
 import com.tancheon.account.repository.AccountRepository;
 import com.tancheon.account.repository.SessionRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,20 +20,28 @@ import java.util.Date;
 import java.util.Optional;
 
 @Slf4j
+@RequiredArgsConstructor
 @Component
 public class JwtAuthorizationInterceptor extends HandlerInterceptorAdapter {
 
-	private JwtTokenProvider jwtTokenProvider;
-
-	private SessionRepository sessionRepository;
-
-	private AccountRepository accountRepository;
+	private final JwtTokenProvider jwtTokenProvider;
+	private final SessionRepository sessionRepository;
+	private final AccountRepository accountRepository;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
 		String header = request.getHeader(ApiConstant.AUTHORIZATION);
-		String jwt = header.split(ApiConstant.TOKEN_PREFIX)[1];
+
+		if (!StringUtils.hasText(header))
+			return false;
+
+		String[] tokens = header.split(ApiConstant.TOKEN_PREFIX);
+
+		if (tokens.length < ApiConstant.TOKEN_LENGTH)
+			return false;
+
+		String jwt = tokens[1];
 
 		/*
 			TODO: access token 만료 시, refresh 토큰 확인하여 access token 발급하는 과정 필요

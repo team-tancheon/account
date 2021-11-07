@@ -58,7 +58,7 @@ paths:
           200:
             description: '로그아웃 성공'
 
-  /v1/register:
+  /v1/signup:
     post:
       summary: '회원가입'
       tags:

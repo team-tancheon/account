@@ -11,6 +11,7 @@ public interface ApiConstant {
 
     // JWT Token의 prefix는 Bearer
     String TOKEN_PREFIX = "Bearer ";
+    int TOKEN_LENGTH = 2;
 
     // JWT Token은 Authorization header로 전달됩니다.
     String AUTHORIZATION = "Authorization";

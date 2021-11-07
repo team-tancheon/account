@@ -12,9 +12,24 @@ spring:
     name: account
   profiles:
     active: local
+  messages:
+    basename: messages/messages
+    encoding: UTF-8
+    use-code-as-default-message: true
+  thymeleaf:
+    prefix: classpath:template/mail/
+    suffix: .html
+    cache: false
+    mode: HTML
+    encoding: UTF-8
 
 springdoc:
   api-docs:
     enabled: false
   swagger-ui:
     url: /account/swagger/v1/swagger.yml
+
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator

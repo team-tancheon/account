@@ -10,9 +10,7 @@ spring:
       validation-timeout: 5000
       max-lifetime: 60000
       maximum-pool-size: 10
-
   jpa:
-    generate-ddl: true
     hibernate:
       dialect: org.hibernate.dialect.PostgreSQL10Dialect
       ddl-auto: none
@@ -22,7 +20,6 @@ spring:
         show-sql: true
         use_sql_comments: true
     open-in-view: false
-
   flyway:
     enabled: true
     url: jdbc:postgresql://localhost:5432/account
@@ -39,16 +36,16 @@ spring:
     clean-disabled: true
     clean-on-validation-error: false
     installed-by: account
-
   mail:
     host: smtp.gmail.com
     port: 587
-    username:
-    password:
+    username: ENC(CAlWI1BeES7idnwqXcdC9C6RG6PAO+TZEJ5uwQYosjA=)
+    password: ENC(WLvgCc4EKnQtsacTy0MdMB+3yKaDjGit7wTOTCPIEpI=)
     properties:
       mail:
         smtp:
           auth: true
+          timeout: 5000
           starttls:
             enable: true
 
@@ -57,3 +54,11 @@ logging:
   file:
     path: ${user.home}/logs/account
     name: account.log
+
+application:
+  async-executor:
+    core-pool-size: 2
+    max-pool-size: 50
+    queue-capacity: 10000
+  mail:
+    sender-mail-address: local-no-reply@gmail.com

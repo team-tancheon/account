@@ -31,6 +31,7 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-ui:1.4.8'
     implementation 'org.flywaydb:flyway-core:6.5.7'
     implementation 'com.auth0:java-jwt:3.18.2'
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
